@@ -4,18 +4,8 @@ import ProductGrid from "../components/ProductGrid";
 import { getProducts } from "../shopify/products";
 
 const getServerSideProps = async () => {
-  const products = await getProducts
-    .then((response) => {
-      if (response.data.errors) {
-        console.error(response.data.errors);
-        return [];
-      }
-      return response.data.data.products;
-    })
-    .catch((error) => {
-      console.error(error);
-      return [];
-    });
+  const response = await getProducts;
+  const { products } = response.data.data;
 
   return {
     props: {
@@ -28,6 +18,7 @@ const Products = ({ products }: IProductsPageProps) => {
   return (
     <main>
       <Nav />
+      <h1 style={{ textAlign: "center" }}>Products Page</h1>
       <ProductGrid products={products} />
     </main>
   );
